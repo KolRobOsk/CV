@@ -4,7 +4,7 @@ Założone w celu pokazania predyspozycji i poziomu moich umiejętności. Dokła
 
 Gotowe i działające:
 --
-Niedokończone:
+W trakcie opracowywania:
 --
 1.Kalkulator prawdopodobieństwa rzutów kostką
 
