@@ -34,17 +34,22 @@ class Frame(wx.Frame):
         self.my_sizer.Add(self.is_odd, pos=(0,1))   
         self.my_sizer.Add(self.is_even, pos=(1,1))
         self.my_sizer.Add(self.results_label, pos=(2,1))
-        self.my_sizer.Add(self.execute_button, pos=(3,1))
+        self.my_sizer.Add(self.execute_button, pos=(6,1))
         self.panel.SetSizer(self.my_sizer)
         self.Show()
         
     def execute_script(self, event):
-        try:
-            self.text = self.walls_input.GetValue()
-            self.results_label.SetLabel("Wynik:" + "2")
-            self.sizer.Layout()
-        except:
-            pass
-            
-            
-
+        self.check_empty()
+        self.results_label.SetLabel("Wynik:")
+        print(self.walls_input.value)        
+        
+    def check_empty(self):
+        self.walls_input.value = self.check_empty_singular(self.walls_input)
+        self.rolls_input.value = self.check_empty_singular(self.rolls_input)
+        self.divisible_input.value = self.check_empty_singular(self.divisible_input)
+        
+    def check_empty_singular(self, field):
+        if field.GetValue()=="":
+            return "1"
+        else:
+            return field.GetValue()
