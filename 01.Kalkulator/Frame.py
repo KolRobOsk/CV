@@ -11,8 +11,8 @@ class Frame(wx.Frame):
         self.rolls_label = wx.StaticText(self.panel, label="Ilość rzutów:")
         self.divisible_label = wx.StaticText(self.panel, label="Podzielne przez:")
         self.results_label = wx.StaticText(self.panel, label="")
-        self.is_odd = wx.CheckBox(self.panel, wx.ID_ANY, 'Uzględnić wartości parzyste?')
-        self.is_even = wx.CheckBox(self.panel, wx.ID_ANY, 'Uzględnić wartości nieparzyste?')
+        self.is_odd = wx.CheckBox(self.panel, wx.ID_ANY, 'Uzględnić wartości nieparzyste?')
+        self.is_even = wx.CheckBox(self.panel, wx.ID_ANY, 'Uzględnić wartości parzyste?')
         #pola wprowadzenia wartości
         self.walls_input = wx.TextCtrl(self.panel, style=wx.TE_PROCESS_ENTER)
         self.rolls_input = wx.TextCtrl(self.panel, style=wx.TE_PROCESS_ENTER)
@@ -39,17 +39,50 @@ class Frame(wx.Frame):
         self.Show()
         
     def execute_script(self, event):
-        self.check_empty()
-        self.results_label.SetLabel("Wynik:")
-        print(self.walls_input.value)        
+        self.check_vals_empty()
+        if self.is_odd.Value or self.is_even.Value:
+            results = self.get_results()
+            if results == 1:
+                self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(1))
+            elif results > 1:
+                #zmienne wynikowe
+                results = self.get_results()
+                self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(results) + "/"+ str(self.walls_input.Value))
+                #przedwczesny koniec działania funkcji
+            else:
+                self.results_label.SetLabel("Brak możliwych wyników:\n")
+        else:
+            self.results_label.SetLabel("Brak możliwych wyników:\n")
+
+    def check_divisible(self, value):
+        if value%int(self.divisible_input.Value)==0:
+            return True
+        else:
+            return False
         
-    def check_empty(self):
-        self.walls_input.value = self.check_empty_singular(self.walls_input)
-        self.rolls_input.value = self.check_empty_singular(self.rolls_input)
-        self.divisible_input.value = self.check_empty_singular(self.divisible_input)
+    def check_set_empty(self, set_num):
+        #sprawdź czy ilość możliwości jest większa od 0
+        if set_num == []:
+            return True
+        else: 
+            return False
         
+    def check_vals_empty(self):
+        self.walls_input.Value = self.check_empty_singular(self.walls_input)
+        self.rolls_input.Value = self.check_empty_singular(self.rolls_input)
+        self.divisible_input.Value = self.check_empty_singular(self.divisible_input)
+        
+    def get_results(self):
+        odd, even, counter = self.is_odd.Value, self.is_even.Value, 0
+        if odd or even:
+            for value in range(1, 1 + int(self.walls_input.Value)):
+                if self.check_divisible(value):
+                    if (odd and even) or (odd and value%2==1) or (even and value%2==0):
+                        counter += 1
+        return counter                       
+                                
     def check_empty_singular(self, field):
-        if field.GetValue()=="":
+        if field.GetValue().strip()=="":
             return "1"
         else:
             return field.GetValue()
