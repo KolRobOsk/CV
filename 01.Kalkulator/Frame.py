@@ -15,11 +15,11 @@ class Frame(wx.Frame):
         self.is_even = wx.CheckBox(self.panel, wx.ID_ANY, 'Uzględnić wartości parzyste?')
         #pola wprowadzenia wartości
         self.walls_input = wx.TextCtrl(self.panel, style=wx.TE_PROCESS_ENTER)
-        self.rolls_input = wx.TextCtrl(self.panel, style=wx.TE_PROCESS_ENTER)
         self.divisible_input = wx.TextCtrl(self.panel, style=wx.TE_PROCESS_ENTER)
+        self.rolls_input = wx.TextCtrl(self.panel, style=wx.TE_PROCESS_ENTER)
+        self.walls_input.SetFocus()
         #przycisk uruchomienia skryptu
         self.execute_button = wx.Button(self.panel, wx.ID_ANY, 'Oblicz', (15, 15))
-        self.walls_input.SetFocus()
         #powiązanie funkcji i interakcji użytkownika z oknem
         self.execute_button.Bind(wx.EVT_BUTTON, self.execute_script)
         #dodanie do kontrolera wszystkich elementów
@@ -34,27 +34,40 @@ class Frame(wx.Frame):
         self.my_sizer.Add(self.is_odd, pos=(0,1))   
         self.my_sizer.Add(self.is_even, pos=(1,1))
         self.my_sizer.Add(self.results_label, pos=(2,1))
-        self.my_sizer.Add(self.execute_button, pos=(6,1))
+        self.my_sizer.Add(self.execute_button, pos=(4,1))
         self.panel.SetSizer(self.my_sizer)
         self.Show()
-        
+    
     def execute_script(self, event):
+        #główna część programu
         self.check_vals_empty()
         if self.is_odd.Value or self.is_even.Value:
-            results = self.get_results()
-            if results == 1:
+            results_top, results_bottom = self.get_results()
+            if results_bottom == 1:
                 self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(1))
-            elif results > 1:
+            elif results_bottom > 1:
                 #zmienne wynikowe
-                results = self.get_results()
-                all_rolls_set = pow(int(self.walls_input.Value), int(self.rolls_input.Value))
-                self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(results) + "/"+ str(all_rolls_set))
+                results_top, results_bottom = self.optimise_results(results_top, results_bottom, int(self.divisible_input.Value))
+                self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(results_top) + "/"+ str(results_bottom))
                 #przedwczesny koniec działania funkcji
             else:
                 self.results_label.SetLabel("Brak możliwych wyników:\n")
         else:
             self.results_label.SetLabel("Brak możliwych wyników:\n")
-
+            
+    def count_for_no_rolls(self, counter):
+        #uwzględnienie ilości rzutów
+        top = int(self.rolls_input.Value) * counter * pow((int(self.walls_input.Value)-counter), int(self.rolls_input.Value)-1)
+        bottom = int(self.walls_input.Value) * pow(int(self.walls_input.Value), int(self.rolls_input.Value)-1)
+        return top, bottom
+        
+    def optimise_results(self, results, all_rolls, divident):
+        while divident > 1:
+            while int(results)%divident == 0 and int(all_rolls)%divident == 0:
+                results, all_rolls = results/divident, all_rolls/divident
+            divident -= 1
+        return int(results), int(all_rolls)
+        
     def check_divisible(self, value):
         if value%int(self.divisible_input.Value)==0:
             return True
@@ -80,8 +93,7 @@ class Frame(wx.Frame):
                 if self.check_divisible(value):
                     if (odd and even) or (odd and value%2==1) or (even and value%2==0):
                         counter += 1
-        counter *= int(self.rolls_input.Value)
-        return counter                       
+        return self.count_for_no_rolls(counter) 
                                 
     def check_empty_singular(self, field):
         if field.GetValue().strip()=="":

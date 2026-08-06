@@ -9,6 +9,6 @@ from wx import App
 
 if __name__ == "__main__":
     app = App(False) 
-    frame = Frame() 
+    frame = Frame()     
     frame.Show(True)     
-    app.MainLoop()      
+    app.MainLoop()          
