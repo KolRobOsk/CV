@@ -47,7 +47,8 @@ class Frame(wx.Frame):
             elif results > 1:
                 #zmienne wynikowe
                 results = self.get_results()
-                self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(results) + "/"+ str(self.walls_input.Value))
+                all_rolls_set = pow(int(self.walls_input.Value), int(self.rolls_input.Value))
+                self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(results) + "/"+ str(all_rolls_set))
                 #przedwczesny koniec działania funkcji
             else:
                 self.results_label.SetLabel("Brak możliwych wyników:\n")
@@ -79,6 +80,7 @@ class Frame(wx.Frame):
                 if self.check_divisible(value):
                     if (odd and even) or (odd and value%2==1) or (even and value%2==0):
                         counter += 1
+        counter *= int(self.rolls_input.Value)
         return counter                       
                                 
     def check_empty_singular(self, field):
