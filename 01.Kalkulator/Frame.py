@@ -45,15 +45,15 @@ class Frame(wx.Frame):
             results_top, results_bottom = self.get_results()
             if results_bottom == 1:
                 self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(1))
-            elif results_bottom > 1:
+            elif results_bottom > 1 and results_top > 0:
                 #zmienne wynikowe
                 results_top, results_bottom = self.optimise_results(results_top, results_bottom, int(self.divisible_input.Value))
                 self.results_label.SetLabel("Prawdopodobieństwo:\n" + str(results_top) + "/"+ str(results_bottom))
                 #przedwczesny koniec działania funkcji
             else:
-                self.results_label.SetLabel("Brak możliwych wyników:\n")
+                self.results_label.SetLabel("Brak możliwych wyników\n")
         else:
-            self.results_label.SetLabel("Brak możliwych wyników:\n")
+            self.results_label.SetLabel("Brak możliwych wyników\n")
             
     def count_for_no_rolls(self, counter):
         #uwzględnienie ilości rzutów
