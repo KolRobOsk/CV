@@ -8,5 +8,6 @@ Gotowe i działające:
 
 Niedokończone:
 --
+2. Aplikacja internetowa forum
 
 Pozdrawiam, R. K.
