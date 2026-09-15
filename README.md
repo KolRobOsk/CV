@@ -4,10 +4,10 @@ Założone w celu pokazania predyspozycji i poziomu moich umiejętności. Dokła
 
 Gotowe i działające:
 --
-1.Kalkulator prawdopodobieństwa rzutów kostką
+1.Kalkulator prawdopodobieństwa rzutów kostką (Python)
 
 Niedokończone:
 --
-2. Aplikacja internetowa forum
+2. Aplikacja internetowa forum (Python, django + ClaudeAI assistance)
 
 Pozdrawiam, R. K.
