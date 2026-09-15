@@ -1,7 +1,16 @@
-# Rekrutacja
-Repo Ćwiczebne i Rekrutacyjne
-Założone w celu pokazania predyspozycji i poziomu moich umiejętności. Dokładne opisy programów zostały umieszczone na gałęziach konktretnych projektów.
+# CV
 
-Kalkulator prawdopodobieństwa rzutów kostką
+Dice roll probability calculation
 --
-Pozdrawiam, R. K.
+Windows app
+Input:
+- rolls count
+- walls count
+- number of which the results are divisible by 
+- include odd results
+- include even results
+
+Output:
+- reduced probability fraction
+
+Best regards, R. K.
