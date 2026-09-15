@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Forum{% endblock %}
+
+{% block content %}
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
+                <div class="field">{{ post.name }}</div>
+                <div class="field">{{ post.content }}</div>
+                <div class="field">by {{ post.author.username }} &middot; {{ post.created_at }}</div>
+                <div class="post-actions">
+                    {% if user == post.author %}
+                        <a href="{% url 'post_edit' post.pk %}" class="tip-link">Edit</a>
+                    {% endif %}
+                    <a href="{% url 'post_detail' post.pk %}" class="tip-link">Comments ({{ post.comments.count }})</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty">No posts yet. Be the first!</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <form class="new-post" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Post</button>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -24,3 +24,27 @@ class Post(models.Model):
 
     def __str__(self):
         return f"#{self.pk} {self.name}"
+
+
+class Comment(models.Model):
+    """A comment on a post. author is null for anonymous comments (shown
+    as 'Anonymous' in templates) -- logged-out visitors are allowed to
+    comment, they just aren't tied to an account."""
+
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="comments",
+        null=True,
+        blank=True,
+    )
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["created_at"]
+
+    def __str__(self):
+        who = self.author.username if self.author else "Anonymous"
+        return f"Comment by {who} on #{self.post_id}"

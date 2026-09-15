@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.name }} — Forum{% endblock %}
+
+{% block content %}
+    <div class="post">
+        <div class="field">{{ post.name }}</div>
+        <div class="field">{{ post.content }}</div>
+        <div class="field">by {{ post.author.username }} &middot; {{ post.created_at }}</div>
+        {% if can_edit %}
+            <div class="post-actions">
+                <a href="{% url 'post_edit' post.pk %}" class="tip-link">Edit this post</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <h2>Comments ({{ comments.count }})</h2>
+
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="post">
+                <div class="field">{{ comment.content }}</div>
+                <div class="field">
+                    By {% if comment.author %}{{ comment.author.username }}{% else %}Anonymous{% endif %}
+                    &middot; {{ comment.created_at }}
+                </div>
+                {% if user.is_authenticated %}
+                    {% if user == comment.author or user == post.author %}
+                        <form method="post" action="{% url 'delete_comment' post.pk comment.pk %}">
+                            {% csrf_token %}
+                            <button type="submit">Delete comment</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty">No comments yet.</p>
+    {% endif %}
+
+    <form class="new-post" method="post" action="{% url 'add_comment' post.pk %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit">Comment</button>
+    </form>
+
+    {% if not user.is_authenticated %}
+        <p class="empty">
+            You're commenting as Anonymous.
+            <a href="{% url 'accounts:login' %}" class="tip-link">Log in</a> to comment under your name.
+        </p>
+    {% endif %}
+{% endblock %}

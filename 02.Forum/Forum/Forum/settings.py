@@ -132,6 +132,15 @@ LOGOUT_REDIRECT_URL = 'homepage'
 # account is deleted automatically (see accounts/middleware.py).
 EMAIL_VERIFICATION_TIMEOUT_MINUTES = 30
 
+# Toggle for the email-confirmation step on registration. Set this to True
+# to restore the original flow (new accounts start inactive, get a 6-digit
+# code emailed to them, and must enter it at accounts:verify before they
+# can log in). All of that code (models.EmailVerification, the verify_email
+# view, the verify.html template, the accounts:verify URL, and the cleanup
+# middleware) is left fully in place below -- flipping this back to True is
+# the only step needed to bring it back.
+EMAIL_VERIFICATION_ENABLED = False
+
 
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
@@ -155,5 +164,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rkappassistant@gmail.com'  # <-- fill in your Gmail address
-EMAIL_HOST_PASSWORD = 'aogiazkfngmqkfpz'  # <-- fill in your 16-character Gmail App Password
+EMAIL_HOST_PASSWORD = 'zyopluxjgduobmap'  # <-- fill in your 16-character Gmail App Password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm email — Forum{% endblock %}
+
+{% block content %}
+    <h1>Confirm your email</h1>
+    <p class="empty">
+        We sent a 6-digit code to {{ email }}. Enter it below within
+        {{ EMAIL_VERIFICATION_TIMEOUT_MINUTES|default:30 }} minutes or the
+        account will be removed automatically.
+    </p>
+
+    <form class="new-post" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Confirm</button>
+    </form>
+
+    <form class="new-post" method="post">
+        {% csrf_token %}
+        <button type="submit" name="resend" value="1">Resend code</button>
+    </form>
+{% endblock %}

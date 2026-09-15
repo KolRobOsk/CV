@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Delete account — Forum{% endblock %}
+
+{% block content %}
+    <p class="empty">This permanently deletes your account and all its data. This cannot be undone.</p>
+    <form class="new-post" method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete my account</button>
+    </form>
+{% endblock %}
