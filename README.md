@@ -4,9 +4,9 @@ Training and recruitation purpose repository holding different projects. Created
 Ready and working:
 --
 1.Dice roll propability calculator (Python)
+2.Forum webapp (Python, django + ClaudeAI assistance)
 
 Unfinished:
 --
-2.Forum webapp (Python, django + ClaudeAI assistance)
 
 Best regards, R. K.
