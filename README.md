@@ -5,8 +5,8 @@ Ready and working:
 --
 1.Dice roll propability calculator (Python)
 
-Niedokończone:
+Unfinished:
 --
-2. Forum webapp (Python, django + ClaudeAI assistance)
+2.Forum webapp (Python, django + ClaudeAI assistance)
 
 Best regards, R. K.
