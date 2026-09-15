@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Forum{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'homepage/css/style.css' %}">
+</head>
+<body>
+
+<nav class="top-nav top-nav-left">
+    <a href="{% url 'homepage' %}">Home</a>
+</nav>
+
+<nav class="top-nav top-nav-right">
+    {% block nav_right %}
+        {% if user.is_authenticated %}
+            <a href="{% url 'accounts:panel' %}">{{ user.username }} — Account panel</a>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">Login</a> / <a href="{% url 'accounts:register' %}">Register</a>
+        {% endif %}
+    {% endblock %}
+</nav>
+
+<div class="page">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Account panel — Forum{% endblock %}
+
+{% block content %}
+    <div class="field">Username: {{ user.username }}</div>
+    <div class="field">Email: {{ user.email }}</div>
+
+    <p class="empty">
+        <a href="{% url 'accounts:change_password' %}" class="tip-link">Change password</a>
+        <a href="{% url 'accounts:delete_account' %}" class="tip-link">Delete account</a>
+    </p>
+
+    <form method="post" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+    </form>
+{% endblock %}

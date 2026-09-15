@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Edit post — Forum{% endblock %}
+
+{% block content %}
+    <h1>Edit post</h1>
+    <form class="new-post" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+    <p class="empty"><a href="{% url 'post_detail' post.pk %}" class="tip-link">Back to post</a></p>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Log in — Forum{% endblock %}
+
+{% block nav_right %}
+    <a href="{% url 'accounts:register' %}">Register</a>
+{% endblock %}
+
+{% block content %}
+    <h1>Log in</h1>
+    <form class="new-post" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Log in</button>
+    </form>
+{% endblock %}
