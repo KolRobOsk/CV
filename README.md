@@ -1,5 +1,5 @@
 # CV
-Training and recruitation purpose repository holding different projects. Created to show programming skills. Each project has it's own branch with readme.
+Training and recruitment purpose repository holding different projects. Created to show programming skills. Each project has it's own branch with readme.
 
 Ready and working:
 --
