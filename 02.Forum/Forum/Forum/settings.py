@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'homepage',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Lazily deletes accounts that never confirmed their email in time.
+    'accounts.middleware.CleanupExpiredRegistrationsMiddleware',
 ]
 
 ROOT_URLCONF = 'Forum.urls'
@@ -55,7 +58,7 @@ ROOT_URLCONF = 'Forum.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,11 +121,39 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 
+# Authentication
+# https://docs.djangoproject.com/en/6.1/topics/auth/default/
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'homepage'
+LOGOUT_REDIRECT_URL = 'homepage'
+
+# How long a newly registered account has to confirm its email before the
+# account is deleted automatically (see accounts/middleware.py).
+EMAIL_VERIFICATION_TIMEOUT_MINUTES = 30
+
+
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
+#
+# Sends confirmation codes through Gmail's SMTP server.
+#
+# 1. Turn on 2-Step Verification on the Gmail account you want to send from:
+#    https://myaccount.google.com/security
+# 2. Create an "App Password" for this project:
+#    https://myaccount.google.com/apppasswords
+#    (this is a 16-character password Google generates for apps -- it is
+#    NOT your normal Gmail password, and it's the only thing that should
+#    ever go in EMAIL_HOST_PASSWORD below)
+# 3. Fill in EMAIL_HOST_USER and EMAIL_HOST_PASSWORD below with your Gmail
+#    address and that app password. Don't commit real credentials to a
+#    public repo -- keep this file private, or move these two values to
+#    environment variables later if you want extra safety.
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'rkappassistant@gmail.com'  # <-- fill in your Gmail address
+EMAIL_HOST_PASSWORD = 'aogiazkfngmqkfpz'  # <-- fill in your 16-character Gmail App Password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
