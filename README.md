@@ -1,7 +1,7 @@
 # CV
-
-Dice roll probability calculation
 --
+Dice roll probability calculation
+
 Windows app
 Input:
 - rolls count
