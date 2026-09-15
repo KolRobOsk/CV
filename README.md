@@ -1,13 +1,12 @@
 # Rekrutacja
-Repo Ćwiczebne i Rekrutacyjne
-Założone w celu pokazania predyspozycji i poziomu moich umiejętności. Dokładne opisy programów zostały umieszczone na gałęziach konktretnych projektów. Obecnie umieszczone są tu projekty:
+Training and recruitation purpose repository holding different projects. Created to show programming skills. Each project has it's own branch with readme.
 
-Gotowe i działające:
+Ready and working:
 --
-1.Kalkulator prawdopodobieństwa rzutów kostką (Python)
+1.Dice roll propability calculator (Python)
 
 Niedokończone:
 --
-2. Aplikacja internetowa forum (Python, django + ClaudeAI assistance)
+2. Forum webapp (Python, django + ClaudeAI assistance)
 
-Pozdrawiam, R. K.
+Best regards, R. K.
