@@ -1,6 +1,4 @@
 # CV
---
-
 Dice roll probability calculation
 
 Windows app
