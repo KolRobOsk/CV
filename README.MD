@@ -2,4 +2,4 @@
 
 Forum Webapp
 
-Pozdrawiam, R. K.
+Best Regards, R. K.
